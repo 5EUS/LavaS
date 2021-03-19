@@ -1,5 +1,4 @@
-
-#LavaS
+# LavaS
 
 Originally made in Skript - now in a brand-new flavor: Java!
 
