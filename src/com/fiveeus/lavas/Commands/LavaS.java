@@ -1,6 +1,10 @@
 package com.fiveeus.lavas.Commands;
 
 import com.fiveeus.lavas.Main;
+import com.fiveeus.lavas.Physics.Lava;
+import org.bukkit.Location;
+import org.bukkit.Material;
+import org.bukkit.block.Block;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -53,6 +57,26 @@ public class LavaS implements CommandExecutor {
 
                             }
 
+
+
+                        } else if (args[0].equals("reset")) {
+                            resetBlocks();
+
+                        } else if (args[0].equals("list")) {
+                            for (int i = 0; i < Lava.locations.size(); i++) {
+                                Location loc = Lava.locations.get(i);
+
+                                double x = loc.getX();
+                                double y = loc.getY();
+                                double z = loc.getZ();
+
+
+                                Material mat = Lava.materials.get(i);
+                                sender.sendMessage(x + " " + y + " " + z + " " + ": " + mat);
+
+
+
+                            }
                         } else {
                             sender.sendMessage(prefix + " §c§lLavaS Help Menu");
                             sender.sendMessage("§8/lavas §bDisplays the help menu");
@@ -69,5 +93,27 @@ public class LavaS implements CommandExecutor {
 
         }
         return true;
+    }
+
+    public static void resetBlocks() {
+
+        Plugin plugin = Main.getPluginInstance();
+        String prefix = plugin.getConfig().getString("prefix");
+
+
+        plugin.getServer().broadcastMessage(prefix + "§cResetting blocks...");
+
+        for (int i = 0; i < Lava.locations.size(); i++) {
+
+            Block block = Lava.locations.get(i).getBlock();
+
+            block.setType(Lava.materials.get(i));
+
+        }
+
+        Lava.locations.clear();
+        Lava.materials.clear();
+
+        plugin.getServer().broadcastMessage(prefix + "§cDone!");
     }
 }
