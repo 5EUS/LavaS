@@ -1,5 +1,6 @@
 package com.fiveeus.lavas.Commands;
 
+import com.fiveeus.lavas.Events.PlayerBreak;
 import com.fiveeus.lavas.Main;
 import com.fiveeus.lavas.Physics.Lava;
 import org.bukkit.Location;
@@ -11,12 +12,14 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
 
+import static org.bukkit.Bukkit.getServer;
 
 public class LavaS implements CommandExecutor {
 
-    private Plugin plugin = Main.getPluginInstance();
-    private String prefix = plugin.getConfig().getString("prefix");
-    private String permission = plugin.getConfig().getString("base-permission");
+    private final Plugin plugin = Main.getPluginInstance();
+    private final String prefix = plugin.getConfig().getString("prefix");
+    private final String permission = plugin.getConfig().getString("admin-permission");
+    public static boolean build;
 
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
@@ -63,9 +66,9 @@ public class LavaS implements CommandExecutor {
                             resetBlocks();
 
                         } else if (args[0].equals("list")) {
+
                             for (int i = 0; i < Lava.locations.size(); i++) {
                                 Location loc = Lava.locations.get(i);
-
                                 double x = loc.getX();
                                 double y = loc.getY();
                                 double z = loc.getZ();
@@ -74,15 +77,35 @@ public class LavaS implements CommandExecutor {
                                 Material mat = Lava.materials.get(i);
                                 sender.sendMessage(x + " " + y + " " + z + " " + ": " + mat);
 
+                                Location loc2 = Lava.locations.get(i);
 
+                                double x2 = loc2.getX();
+                                double y2 = loc2.getY();
+                                double z2 = loc2.getZ();
+
+
+                                Material mat2 = Lava.materials.get(i);
+                                sender.sendMessage(x2 + " " + y2 + " " + z2 + " " + ": " + mat2);
 
                             }
-                        } else {
-                            sender.sendMessage(prefix + " §c§lLavaS Help Menu");
-                            sender.sendMessage("§8/lavas §bDisplays the help menu");
-                            sender.sendMessage("§8/lavas lava §bToggles lava physics");
-                            sender.sendMessage("§8/lavas water §bToggles water physics");
+                        }  else if (args[0].equals("build")) {
+                            if (!(build)) {
+                                build = true;
+                                getServer().broadcastMessage(prefix + " §7Build mode has been enabled.");
+
+                            } else {
+                                build = false;
+                                getServer().broadcastMessage(prefix + " §7Build mode has been disabled.");
+                            }
+
                         }
+
+                    }else {
+                        sender.sendMessage(prefix + " §c§lLavaS Help Menu");
+                        sender.sendMessage("§8/lavas §bDisplays the help menu");
+                        sender.sendMessage("§8/lavas lava §bToggles lava physics");
+                        sender.sendMessage("§8/lavas water §bToggles water physics");
+                        sender.sendMessage("§8/lavas build §bToggles build mode for admins");
                     }
 
                 } else {
@@ -101,19 +124,29 @@ public class LavaS implements CommandExecutor {
         String prefix = plugin.getConfig().getString("prefix");
 
 
-        plugin.getServer().broadcastMessage(prefix + "§cResetting blocks...");
+        plugin.getServer().broadcastMessage(prefix + " §cResetting blocks...");
+        getServer().getScheduler().cancelTasks(plugin);
+
+        for (int i = 0; i  < PlayerBreak.locations.size(); i++) {
+
+            Block block = PlayerBreak.locations.get(i).getBlock();
+            block.setType(PlayerBreak.materials.get(i));
+
+        }
 
         for (int i = 0; i < Lava.locations.size(); i++) {
 
             Block block = Lava.locations.get(i).getBlock();
-
             block.setType(Lava.materials.get(i));
-
         }
+
+
 
         Lava.locations.clear();
         Lava.materials.clear();
+        PlayerBreak.locations.clear();
+        PlayerBreak.materials.clear();
 
-        plugin.getServer().broadcastMessage(prefix + "§cDone!");
+        plugin.getServer().broadcastMessage(prefix + " §cDone!");
     }
 }

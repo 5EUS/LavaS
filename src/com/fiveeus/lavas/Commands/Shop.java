@@ -14,9 +14,9 @@ import org.bukkit.plugin.Plugin;
 public class Shop implements CommandExecutor {
 
 
-    private Plugin plugin = Main.getPluginInstance();
-    private String prefix = plugin.getConfig().getString("prefix");
-    private Economy eco = Main.getEconomy();
+    private final Plugin plugin = Main.getPluginInstance();
+    private final String prefix = plugin.getConfig().getString("prefix");
+    private final Economy eco = Main.getEconomy();
 
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {

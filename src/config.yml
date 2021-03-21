@@ -1,0 +1,7 @@
+#LavaS by 5EUS
+prefix: §c§lLavaS §8>
+admin-permission: lavas.admin
+
+physics:
+  lava-physics: false
+  water-physics: false

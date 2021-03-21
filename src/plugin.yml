@@ -1,0 +1,16 @@
+name: LavaS
+version: 0.1
+main: com.fiveeus.lavas.Main
+author: 5EUS
+api-version: 1.16
+depend: [Vault]
+commands:
+  lavas:
+    description: Base LavaS command.
+    usage: <command>
+  shop:
+    description: Buy things from the shop
+    usage: <command>
+  blocks:
+    description: Open up blocks menu
+    usage: <command>
