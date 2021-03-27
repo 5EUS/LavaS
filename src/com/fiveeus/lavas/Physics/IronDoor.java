@@ -1,7 +1,7 @@
 package com.fiveeus.lavas.Physics;
 
 import com.fiveeus.lavas.Main;
-import org.bukkit.Location;
+import org.bukkit.plugin.Plugin;
 import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.block.Block;
@@ -9,12 +9,11 @@ import org.bukkit.block.BlockFace;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockDamageEvent;
-
-import java.util.Arrays;
-
 import static org.bukkit.Bukkit.getServer;
 
 public class IronDoor implements Listener {
+
+    private static Plugin plugin = Main.getPluginInstance();
 
     @EventHandler
     public static void onDamage(BlockDamageEvent e) {
@@ -25,8 +24,9 @@ public class IronDoor implements Listener {
 
             // Implement owner system here
 
-
-            getBlocks(block);
+            if ((!e.getPlayer().isSneaking())) {
+                getBlocks(block);
+            }
 
 
         }
@@ -35,14 +35,11 @@ public class IronDoor implements Listener {
                 && !(e.getBlock().getType().equals(Material.BARRIER))) {
 
             e.setInstaBreak(true);
+
         }
 
-
-
-
-
     }
-    private static void getBlocks(Block block) {
+    private static void getBlocks(Block block) { // optimize
 
         if (block.getRelative(BlockFace.NORTH).getType().equals(Material.IRON_BLOCK)) {
             block.setType(Material.AIR);

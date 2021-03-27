@@ -13,11 +13,15 @@ public class InventoryEvents implements Listener {
     public void onInvClick(InventoryClickEvent e) {
         if (e.getView().getTitle().equals("§aBlocks")) {
             Player player = (Player) e.getWhoClicked();
-            ItemMeta meta  = e.getCurrentItem().getItemMeta();
-            if (meta.hasDisplayName()) {
-                e.setCancelled(true);
-                Material mat = e.getCurrentItem().getType();
-                player.performCommand("shop " + mat);
+            try {
+                ItemMeta meta = e.getCurrentItem().getItemMeta();
+                if (meta.hasDisplayName()) {
+                    e.setCancelled(true);
+                    Material mat = e.getCurrentItem().getType();
+                    player.performCommand("shop " + mat);
+                }
+            } catch (Exception exception) {
+                return;
             }
         }
     }

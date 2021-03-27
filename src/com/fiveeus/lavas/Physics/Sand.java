@@ -11,6 +11,7 @@ public class Sand implements Listener {
     public static void onFall(EntityChangeBlockEvent e) {
         if (e.getBlock().getType().equals(Material.SAND)) {
             e.setCancelled(true);
+            e.getBlock().setType(Material.SAND);
         }
     }
 }

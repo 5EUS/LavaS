@@ -2,6 +2,7 @@ package com.fiveeus.lavas.Events;
 
 import com.fiveeus.lavas.Commands.LavaS;
 import com.fiveeus.lavas.Main;
+import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -21,7 +22,7 @@ public class PlayerBreak implements Listener {
     @EventHandler
     public static void onPlace(BlockBreakEvent e) {
         Plugin plugin = Main.getPluginInstance();
-        String permission = plugin.getConfig().getString("base-permission");
+        String permission = plugin.getConfig().getString("admin-permission");
 
         Player player = e.getPlayer();
 
@@ -32,8 +33,10 @@ public class PlayerBreak implements Listener {
             }
 
         } else if (!(LavaS.build)) {
-            locations.add(e.getBlock().getLocation());
-            materials.add(e.getBlock().getType());
+            if (!(locations.contains(e.getBlock().getLocation()))) {
+                locations.add(e.getBlock().getLocation());
+                materials.add(e.getBlock().getType());
+            }
         }
 
     }

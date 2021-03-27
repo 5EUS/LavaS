@@ -75,7 +75,7 @@ public class Lava implements Listener {
 
         String caseString = mat.toString();
 
-        Long coalDelay = 120L;
+        Long coalDelay = 240L;
 
         switch (caseString) {
             case "AIR":
@@ -89,11 +89,11 @@ public class Lava implements Listener {
                         getServer().getScheduler().runTaskLater(plugin, new Runnable() {
                             @Override
                             public void run() {
-                                block.setType(Material.LAVA);
+                                block.setType(Material.AIR);
                             }
-                        }, 120);
+                        }, 240);
                     }
-                }, 120);
+                }, 240);
 
                 break;
             case "STONE":
@@ -108,23 +108,24 @@ public class Lava implements Listener {
                         getServer().getScheduler().runTaskLater(plugin, new Runnable() {
                             @Override
                             public void run() {
-                                block.setType(Material.LAVA);
+                                block.setType(Material.AIR);
                             }
                         }, coalDelay);
                     }
-                }, 1200);
+                }, 2400);
                 break;
 
             case "OAK_SAPPLING":
             case "DANDELION":
             case "POPPY":
             case "OAK_LEAVES":
+            case "DIRT":
                 getServer().getScheduler().runTaskLater(plugin, new Runnable() {
                     @Override
                     public void run() {
-                        block.setType(Material.LAVA);
+                        block.setType(Material.AIR);
                     }
-                }, 20);
+                }, 60);
                 break;
 
             case "OAK_PLANKS":
@@ -145,6 +146,7 @@ public class Lava implements Listener {
             case "GRAY_WOOL":
             case "LIGHT_GRAY_WOOL":
             case "WHITE_WOOL":
+            case "GLASS":
                 getServer().getScheduler().runTaskLater(plugin, new Runnable() {
                     @Override
                     public void run() {
@@ -152,11 +154,11 @@ public class Lava implements Listener {
                         getServer().getScheduler().runTaskLater(plugin, new Runnable() {
                             @Override
                             public void run() {
-                                block.setType(Material.LAVA);
+                                block.setType(Material.AIR);
                             }
                         }, coalDelay);
                     }
-                }, 40);
+                }, 120);
                 break;
 
             case "COAL_ORE":
@@ -165,7 +167,7 @@ public class Lava implements Listener {
                 getServer().getScheduler().runTaskLater(plugin, new Runnable() {
                     @Override
                     public void run() {
-                        block.setType(Material.LAVA);
+                        block.setType(Material.AIR);
                     }
                 }, coalDelay);
                 break;
@@ -179,12 +181,12 @@ public class Lava implements Listener {
                         getServer().getScheduler().runTaskLater(plugin, new Runnable() {
                             @Override
                             public void run() {
-                                block.setType(Material.LAVA);
+                                block.setType(Material.AIR);
 
                             }
                         }, coalDelay);
                     }
-                }, 2400);
+                }, 4800);
                break;
             case "GRAVEL":
             case "SPONGE":
@@ -195,12 +197,13 @@ public class Lava implements Listener {
                         getServer().getScheduler().runTaskLater(plugin, new Runnable() {
                             @Override
                             public void run() {
-                                block.setType(Material.LAVA);
+                                block.setType(Material.AIR);
 
                             }
                         }, coalDelay);
                     }
-                }, 60);
+                }, 90);
+                break;
 
             case "TNT":
                 block.setType(Material.AIR);

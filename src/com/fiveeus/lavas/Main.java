@@ -4,6 +4,10 @@ import com.fiveeus.lavas.Commands.BlocksCommand;
 import com.fiveeus.lavas.Commands.LavaS;
 import com.fiveeus.lavas.Commands.Shop;
 import com.fiveeus.lavas.Events.*;
+import com.fiveeus.lavas.GameMode.GameManager;
+import com.fiveeus.lavas.GameMode.StartCommand;
+import com.fiveeus.lavas.GameMode.StopCommand;
+import com.fiveeus.lavas.GameMode.Vote;
 import com.fiveeus.lavas.Inventories.InventoryEvents;
 import com.fiveeus.lavas.Physics.*;
 import org.bukkit.configuration.InvalidConfigurationException;
@@ -30,13 +34,19 @@ public class Main extends JavaPlugin {
     private static Economy econ = null;
     private static Permission perms = null;
     private static Chat chat = null;
-
     private static Plugin plugin;
     public static File customConfigFile;
     private static FileConfiguration customConfig;
 
+    private GameManager gameManager;
+
     @Override
     public void onEnable() {
+        plugin = this;
+        createCustomConfig();
+
+        this.gameManager = new GameManager(this);
+
 
         if (!setupEconomy() ) {
             log.severe(String.format("[%s] - Disabled due to no Vault dependency found!", getDescription().getName()));
@@ -45,9 +55,9 @@ public class Main extends JavaPlugin {
         }
 
 
-        plugin = this;
-        createCustomConfig();
+
         getServer().getConsoleSender().sendMessage("§c[LavaS] " + "§7Enabled LavaS v0.1");
+        getServer().getConsoleSender().sendMessage("§c[LavaS] " + "§7Make sure to enable build mode to make maps!");
         this.getServer().getPluginManager().registerEvents(new Lava(), this);
         this.getServer().getPluginManager().registerEvents(new Water(), this);
         this.getServer().getPluginManager().registerEvents(new InventoryEvents(), this);
@@ -59,18 +69,24 @@ public class Main extends JavaPlugin {
         this.getServer().getPluginManager().registerEvents(new PlayerBreak(), this);
         this.getServer().getPluginManager().registerEvents(new Craft(), this);
         this.getServer().getPluginManager().registerEvents(new FormBlock(), this);
-        this.getServer().getPluginManager().registerEvents(new Explosion(), this);
         this.getServer().getPluginManager().registerEvents(new PlaceOnMushroom(), this);
         this.getServer().getPluginManager().registerEvents(new MushroomBreak(), this);
+        this.getServer().getPluginManager().registerEvents(new Sprint(), this);
+        this.getServer().getPluginManager().registerEvents(new OnDeath(), this);
         this.getCommand("lavas").setExecutor(new LavaS());
         this.getCommand("blocks").setExecutor(new BlocksCommand());
         this.getCommand("shop").setExecutor(new Shop());
+        this.getCommand("startgame").setExecutor(new StartCommand(gameManager));
+        this.getCommand("stopgame").setExecutor(new StopCommand(gameManager));
+        this.getCommand("votemap").setExecutor(new Vote());
 
     }
 
     @Override
     public void onDisable() {
         getServer().getConsoleSender().sendMessage("§c[LavaS] " + "§7Disabled LavaS v0.1");
+
+//        gameManager.cleanup();
 
     }
 

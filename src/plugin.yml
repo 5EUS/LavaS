@@ -14,3 +14,12 @@ commands:
   blocks:
     description: Open up blocks menu
     usage: <command>
+  startgame:
+    description: Starts lava game
+    usage: <command>
+  stopgame:
+    description: Stops lava game
+    usage: <command>
+  votemap:
+    description: Vote for a map
+    usage: <command>

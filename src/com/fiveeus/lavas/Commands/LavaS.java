@@ -1,6 +1,7 @@
 package com.fiveeus.lavas.Commands;
 
 import com.fiveeus.lavas.Events.PlayerBreak;
+import com.fiveeus.lavas.GameMode.GameManager;
 import com.fiveeus.lavas.Main;
 import com.fiveeus.lavas.Physics.Lava;
 import org.bukkit.Location;
@@ -12,6 +13,7 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
 
+import static com.fiveeus.lavas.GameMode.ResetBlocks.resetBlocks;
 import static org.bukkit.Bukkit.getServer;
 
 public class LavaS implements CommandExecutor {
@@ -20,6 +22,10 @@ public class LavaS implements CommandExecutor {
     private final String prefix = plugin.getConfig().getString("prefix");
     private final String permission = plugin.getConfig().getString("admin-permission");
     public static boolean build;
+
+    private GameManager gameManager;
+
+
 
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
@@ -87,6 +93,7 @@ public class LavaS implements CommandExecutor {
                                 Material mat2 = Lava.materials.get(i);
                                 sender.sendMessage(x2 + " " + y2 + " " + z2 + " " + ": " + mat2);
 
+
                             }
                         }  else if (args[0].equals("build")) {
                             if (!(build)) {
@@ -118,35 +125,4 @@ public class LavaS implements CommandExecutor {
         return true;
     }
 
-    public static void resetBlocks() {
-
-        Plugin plugin = Main.getPluginInstance();
-        String prefix = plugin.getConfig().getString("prefix");
-
-
-        plugin.getServer().broadcastMessage(prefix + " §cResetting blocks...");
-        getServer().getScheduler().cancelTasks(plugin);
-
-        for (int i = 0; i  < PlayerBreak.locations.size(); i++) {
-
-            Block block = PlayerBreak.locations.get(i).getBlock();
-            block.setType(PlayerBreak.materials.get(i));
-
-        }
-
-        for (int i = 0; i < Lava.locations.size(); i++) {
-
-            Block block = Lava.locations.get(i).getBlock();
-            block.setType(Lava.materials.get(i));
-        }
-
-
-
-        Lava.locations.clear();
-        Lava.materials.clear();
-        PlayerBreak.locations.clear();
-        PlayerBreak.materials.clear();
-
-        plugin.getServer().broadcastMessage(prefix + " §cDone!");
-    }
 }

@@ -1,7 +1,23 @@
-#LavaS by 5EUS
 prefix: §c§lLavaS §8>
 admin-permission: lavas.admin
-
+height: 60
+voting: false
+world: world
+sprinting: true
 physics:
-  lava-physics: false
+  lava-physics: true
   water-physics: false
+
+default:
+  location:
+    - 66.5
+    - 65
+    - -162.5
+  lava:
+    - -29
+    - 255
+    - -259
+
+maps:
+  - default
+  - placeholder

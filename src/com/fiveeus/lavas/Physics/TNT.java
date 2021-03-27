@@ -9,7 +9,7 @@ import org.bukkit.event.block.BlockBreakEvent;
 public class TNT implements Listener {
 
     @EventHandler
-    public static void onFlow(BlockBreakEvent e) {
+    public static void oPlace(BlockBreakEvent e) {
         if (e.getBlock().getType().equals(Material.TNT)) {
             e.setCancelled(true);
             e.getBlock().setType(Material.AIR);
@@ -17,4 +17,5 @@ public class TNT implements Listener {
 
         }
     }
+
 }
