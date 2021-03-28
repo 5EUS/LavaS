@@ -1,12 +1,14 @@
 package com.fiveeus.lavas.Physics;
 
+import com.fiveeus.lavas.Events.PlayerBreak;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
+import org.bukkit.block.Block;
 import org.bukkit.entity.EntityType;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
-import org.bukkit.event.block.BlockExplodeEvent;
+import org.bukkit.event.entity.EntityExplodeEvent;
 
 public class TNT implements Listener {
 
@@ -21,10 +23,13 @@ public class TNT implements Listener {
     }
 
     @EventHandler
-    public static void onExplode(BlockExplodeEvent e) {
-
-        Bukkit.broadcastMessage("dsfhfdgsh");
-        e.setCancelled(true);
+    public static void onExplode(EntityExplodeEvent e) {
+        for (Block block : e.blockList()) {
+            if (!(PlayerBreak.locations.contains(block.getLocation()))) {
+                PlayerBreak.locations.add(block.getLocation());
+                PlayerBreak.materials.add(block.getType());
+            }
+        }
     }
 
 }
