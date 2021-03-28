@@ -11,6 +11,7 @@ public class Gravel implements Listener {
     public static void onFall(EntityChangeBlockEvent e) {
         if (e.getBlock().getType().equals(Material.GRAVEL)) {
             e.setCancelled(true);
+            e.getBlock().getState().update(false, false);
         }
     }
 }
