@@ -1,12 +1,10 @@
 package com.fiveeus.lavas.Commands;
 
-import com.fiveeus.lavas.Events.PlayerBreak;
 import com.fiveeus.lavas.GameMode.GameManager;
 import com.fiveeus.lavas.Main;
 import com.fiveeus.lavas.Physics.Lava;
 import org.bukkit.Location;
 import org.bukkit.Material;
-import org.bukkit.block.Block;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;

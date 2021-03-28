@@ -38,7 +38,8 @@ public class Shop implements CommandExecutor {
                             && !(mat.equals(Material.OBSIDIAN))
                             && !(mat.equals(Material.WATER_BUCKET))
                             && !(mat.equals(Material.LAVA_BUCKET))
-                            && !(mat.equals(Material.GOLDEN_HELMET))) {
+                            && !(mat.equals(Material.GOLDEN_HELMET))
+                            && !(mat.equals(Material.IRON_BLOCK))) {
 
                         player.getInventory().addItem(new ItemStack(mat, 64));
 

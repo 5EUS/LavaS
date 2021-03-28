@@ -34,7 +34,7 @@ public class PlaceOnMushroom implements Listener {
                         against.getRelative(BlockFace.UP).setType(block);
 
                         locations.add(against.getRelative(BlockFace.UP).getLocation());
-                        materials.add(against.getRelative(BlockFace.UP).getType());
+                        materials.add(Material.AIR);
 
                     }
                 }

@@ -1,12 +1,13 @@
 package com.fiveeus.lavas.Physics;
 
+import com.fiveeus.lavas.GameMode.ResetBlocks;
 import com.fiveeus.lavas.Main;
+import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
 import org.bukkit.entity.EntityType;
-import org.bukkit.entity.TNTPrimed;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockFromToEvent;
@@ -26,43 +27,41 @@ public class Lava implements Listener {
 
 
 
-
     @EventHandler
     public static void onFlow(BlockFromToEvent e) {
         Plugin plugin = Main.getPluginInstance();
         Block block = e.getBlock();
         if (plugin.getConfig().getBoolean("physics.lava-physics")) {
             if (block.getType().equals(Material.LAVA)) {
-                Block tar;
+                if (!(ResetBlocks.resetting)) {
+                    Block tar;
 
-                Long timeout = 10L;
+                    if (locations.size() == 0) {
+                        locations.add(block.getLocation());
+                        materials.add(Material.AIR);
+                    }
 
-                if (locations.size() == 0) {
-                    locations.add(block.getLocation());
-                    materials.add(Material.AIR);
-                }
+                    BlockFace[] blockFaces = {
+                            BlockFace.NORTH,
+                            BlockFace.SOUTH,
+                            BlockFace.EAST,
+                            BlockFace.WEST,
+                            BlockFace.DOWN
+                    };
 
-                BlockFace[] blockFaces = {
-                        BlockFace.NORTH,
-                        BlockFace.SOUTH,
-                        BlockFace.EAST,
-                        BlockFace.WEST,
-                        BlockFace.DOWN
-                };
+                    for (int i = 0; i < blockFaces.length; i++) {
+                        if (!(block.getRelative(blockFaces[i]).getType().equals(Material.LAVA))
+                                && !(block.getRelative(blockFaces[i]).getType().equals(Material.BEDROCK))
+                                && !(block.getRelative(blockFaces[i]).getType().equals(Material.BARRIER))) {
 
-                for (int i = 0; i < blockFaces.length; i++) {
-                    if (!(block.getRelative(blockFaces[i]).getType().equals(Material.LAVA))
-                            && !(block.getRelative(blockFaces[i]).getType().equals(Material.BEDROCK))
-                            && !(block.getRelative(blockFaces[i]).getType().equals(Material.BARRIER))) {
+                            tar = block.getRelative(blockFaces[i]);
+                            getFlowCollisions(tar);
+                        }
 
-                        tar = block.getRelative(blockFaces[i]);
-                        getFlowCollisions(tar);
                     }
 
                 }
-
             }
-
         }
         e.setCancelled(true);
     }
@@ -70,8 +69,11 @@ public class Lava implements Listener {
     private static void getFlowCollisions(Block block) {
         Material mat = block.getType();
 
-        locations.add(block.getLocation());
-        materials.add(mat);
+
+        if (!(locations.contains(block.getLocation()))) {
+            locations.add(block.getLocation());
+            materials.add(mat);
+        }
 
         String caseString = mat.toString();
 

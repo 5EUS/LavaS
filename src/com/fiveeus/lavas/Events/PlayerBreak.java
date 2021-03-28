@@ -2,7 +2,6 @@ package com.fiveeus.lavas.Events;
 
 import com.fiveeus.lavas.Commands.LavaS;
 import com.fiveeus.lavas.Main;
-import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
