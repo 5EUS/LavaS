@@ -55,7 +55,13 @@ public class Lava implements Listener {
                                 && !(block.getRelative(blockFaces[i]).getType().equals(Material.BARRIER))) {
 
                             tar = block.getRelative(blockFaces[i]);
+                            if (!(locations.contains(tar.getLocation()))) {
+                                locations.add(tar.getLocation());
+                                materials.add(tar.getType());
+                            }
                             getFlowCollisions(tar);
+
+
                         }
 
                     }
@@ -68,12 +74,6 @@ public class Lava implements Listener {
 
     private static void getFlowCollisions(Block block) {
         Material mat = block.getType();
-
-
-        if (!(locations.contains(block.getLocation()))) {
-            locations.add(block.getLocation());
-            materials.add(mat);
-        }
 
         String caseString = mat.toString();
 

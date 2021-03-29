@@ -1,5 +1,6 @@
 package com.fiveeus.lavas.Physics;
 
+import com.fiveeus.lavas.Events.PlayerBreak;
 import org.bukkit.Material;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -12,6 +13,11 @@ public class Sand implements Listener {
         if (e.getBlock().getType().equals(Material.SAND)) {
             e.setCancelled(true);
             e.getBlock().getState().update(false, false);
+
+            if (!(PlayerBreak.locations.contains(e.getBlock().getLocation()))) {
+                PlayerBreak.locations.add(e.getBlock().getLocation());
+                PlayerBreak.materials.add(Material.AIR);
+            }
         }
     }
 }

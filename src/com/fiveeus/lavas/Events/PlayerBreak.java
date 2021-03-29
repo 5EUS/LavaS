@@ -25,6 +25,8 @@ public class PlayerBreak implements Listener {
 
         Player player = e.getPlayer();
 
+        e.setDropItems(false);
+
         if (!(player.hasPermission(permission))) {
             if (!(locations.contains(e.getBlock().getLocation()))) {
                 locations.add(e.getBlock().getLocation());

@@ -12,6 +12,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockPlaceEvent;
+import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.Plugin;
 
 import java.util.List;
@@ -28,10 +29,26 @@ public class PlayerPlace implements Listener {
         String permission = plugin.getConfig().getString("admin-permission");
         String prefix = plugin.getConfig().getString("prefix");
 
+        Material mat = e.getBlock().getType();
+
         Player player = e.getPlayer();
+
+        if (!(mat.equals(Material.BROWN_MUSHROOM))
+                && !(mat.equals(Material.RED_MUSHROOM))
+                && !(mat.equals(Material.BOOKSHELF))
+                && !(mat.equals(Material.TNT))
+                && !(mat.equals(Material.OBSIDIAN))
+                && !(mat.equals(Material.WATER_BUCKET))
+                && !(mat.equals(Material.LAVA_BUCKET))
+                && !(mat.equals(Material.GOLDEN_HELMET))
+                && !(mat.equals(Material.IRON_BLOCK))) {
+
+            player.getInventory().getItemInMainHand().setAmount(2);
+        }
+
         String map = GameStartCountdownTask.selectedMap;
+
         try {
-            World world = plugin.getServer().getWorld(plugin.getConfig().getString("world"));
             List<Double> spawn = plugin.getConfig().getDoubleList(map + ".lava");
 
 
